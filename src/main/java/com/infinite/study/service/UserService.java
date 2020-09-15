@@ -5,7 +5,7 @@ import com.infinite.study.model.Id;
 import com.infinite.study.model.user.Email;
 import com.infinite.study.model.user.User;
 import com.infinite.study.model.user.UserAccount;
-import com.infinite.study.repository.UserRepository;
+import com.infinite.study.repository.user.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

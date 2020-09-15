@@ -1,4 +1,4 @@
-package com.infinite.study.repository;
+package com.infinite.study.repository.user;
 
 import com.infinite.study.model.user.Email;
 import com.infinite.study.model.Id;
@@ -18,7 +18,7 @@ import static com.infinite.study.util.DateTimeUtils.timestampOf;
 import static java.util.Optional.ofNullable;
 
 @Repository
-public class JdbcUserRepository implements UserRepository{
+public class JdbcUserRepository implements UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
 

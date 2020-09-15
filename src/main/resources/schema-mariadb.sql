@@ -40,9 +40,9 @@ CREATE TABLE study_infinite.study (
                                           seq bigint auto_increment primary key,
                                           user_seq bigint NOT NULL,
                                           title varchar(100) NOT NULL,
-                                          shortDescription varchar(100) NOT NULL,
+                                          shortDescription varchar(100),
                                           fullDescription varchar(1000) NOT NULL,
-                                          publishDateTime datetime default now() NOT null,
+                                          publishDateTime datetime default now(),
                                           zones varchar(50) NOT NULL
 );
 

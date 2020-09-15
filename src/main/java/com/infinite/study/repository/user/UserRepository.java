@@ -1,4 +1,4 @@
-package com.infinite.study.repository;
+package com.infinite.study.repository.user;
 
 import com.infinite.study.model.user.Email;
 import com.infinite.study.model.Id;
