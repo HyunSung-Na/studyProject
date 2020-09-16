@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS users CASCADE;
 --- mariadb
 CREATE TABLE study_infinite.users (
                                          seq bigint PRIMARY KEY auto_increment,
-                                         nickname varchar(50) NOT NULL UNIQUE,
+                                         name varchar(50) NOT NULL UNIQUE,
                                          email varchar(50) NOT NULL UNIQUE,
                                          password varchar(255) NOT NULL,
                                          login_count int NOT NULL default 0,

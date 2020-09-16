@@ -24,7 +24,7 @@ class UserServiceTest {
 
   @Autowired private UserService userService;
 
-  private String nickname;
+  private String name;
 
   private Email email;
 
@@ -32,7 +32,7 @@ class UserServiceTest {
 
   @BeforeAll
   void setUp() {
-    nickname = "tester";
+    name = "tester";
     email = new Email("test@gmail.com");
     password = "1234";
   }
@@ -40,7 +40,7 @@ class UserServiceTest {
   @Test
   @Order(1)
   void 사용자를_추가한다() {
-    User user = userService.join(nickname, email, password);
+    User user = userService.join(name, email, password);
     assertThat(user, is(notNullValue()));
     assertThat(user.getSeq(), is(notNullValue()));
     assertThat(user.getEmail(), is(email));

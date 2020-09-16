@@ -1,4 +1,4 @@
-package com.infinite.study.model;
+package com.infinite.study.model.user;
 
 public enum Role {
 

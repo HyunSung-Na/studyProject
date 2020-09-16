@@ -1,9 +1,11 @@
 package com.infinite.study.repository.user;
 
+import com.infinite.study.model.user.ConnectedUser;
 import com.infinite.study.model.user.Email;
 import com.infinite.study.model.Id;
 import com.infinite.study.model.user.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
@@ -16,5 +18,9 @@ public interface UserRepository {
 
     Optional<User> findByEmail(Email email);
 
-    Optional<User> findByNickname(Id<User, String> nickname);
+    Optional<User> findByName(Id<User, String> name);
+
+    List<ConnectedUser> findAllConnectedUser(Id<User, Long> userId);
+
+    List<Id<User, Long>> findConnectedIds(Id<User, Long> userId);
 }

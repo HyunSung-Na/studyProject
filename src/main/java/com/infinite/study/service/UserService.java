@@ -2,16 +2,10 @@ package com.infinite.study.service;
 
 import com.infinite.study.error.NotFoundException;
 import com.infinite.study.model.Id;
+import com.infinite.study.model.user.ConnectedUser;
 import com.infinite.study.model.user.Email;
 import com.infinite.study.model.user.User;
-import com.infinite.study.model.user.UserAccount;
 import com.infinite.study.repository.user.UserRepository;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     private final UserRepository userRepository;
 
@@ -36,14 +30,14 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User join(String nickname, Email email, String password) {
+    public User join(String name, Email email, String password) {
         checkArgument(isNotEmpty(password), "password must be provided.");
         checkArgument(
                 password.length() >= 4 && password.length() <= 15,
                 "password length must be between 4 and 15 characters."
         );
 
-        User user = new User(nickname, email, passwordEncoder.encode(password));
+        User user = new User(name, email, passwordEncoder.encode(password));
         User saved = insert(user);
 
         return saved;
@@ -57,11 +51,6 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new NotFoundException(User.class, email));
         user.login(passwordEncoder, password);
         user.afterLoginSuccess();
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                new UserAccount(user),
-                user.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
-        SecurityContextHolder.getContext().setAuthentication(token);
         update(user);
         return user;
     }
@@ -81,11 +70,18 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String emailOrNickName) throws UsernameNotFoundException {
-        Email email = new Email(emailOrNickName);
-        userRepository.findByEmail(email);
-        return null;
+    @Transactional(readOnly = true)
+    public List<ConnectedUser> findAllConnectedUser(Id<User, Long> userId) {
+        checkNotNull(userId, "userId must be provided.");
+
+        return userRepository.findAllConnectedUser(userId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Id<User, Long>> findConnectedIds(Id<User, Long> userId) {
+        checkNotNull(userId, "userId must be provided.");
+
+        return userRepository.findConnectedIds(userId);
     }
 
     private User insert(User user) {

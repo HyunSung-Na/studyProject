@@ -1,5 +1,6 @@
 package com.infinite.study.model.user;
 
+import com.infinite.study.security.Jwt;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +20,7 @@ public class User {
 
     private final Long seq;
 
-    private final String nickname;
+    private final String name;
 
     private final Email email;
 
@@ -31,21 +32,21 @@ public class User {
 
     private LocalDateTime last_login_at;
 
-    public User(String nickname, Email email, String password) {
-        this(null, nickname, email, password, 0, null, null);
+    public User(String name, Email email, String password) {
+        this(null, name, email, password, 0, null, null);
     }
 
-    public User(Long seq, String nickname, Email email, String password, int login_count, LocalDateTime create_at, LocalDateTime last_login_at) {
-        checkArgument(isNotEmpty(nickname), "name must be provided.");
+    public User(Long seq, String name, Email email, String password, int login_count, LocalDateTime create_at, LocalDateTime last_login_at) {
+        checkArgument(isNotEmpty(name), "name must be provided.");
         checkArgument(
-                nickname.length() >= 1 && nickname.length() <= 10,
+                name.length() >= 1 && name.length() <= 10,
                 "name length must be between 1 and 10 characters."
         );
         checkNotNull(email, "email must be provided.");
         checkNotNull(password, "password must be provided.");
 
         this.seq = seq;
-        this.nickname = nickname;
+        this.name = name;
         this.email = email;
         this.password = password;
         this.login_count = login_count;
@@ -57,8 +58,8 @@ public class User {
         return seq;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getName() {
+        return name;
     }
 
     public Email getEmail() {
@@ -91,6 +92,11 @@ public class User {
         last_login_at = now();
     }
 
+    public String newApiToken(Jwt jwt, String[] roles) {
+        Jwt.Claims claims = Jwt.Claims.of(seq, name, email, roles);
+        return jwt.newToken(claims);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -108,7 +114,7 @@ public class User {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("seq", seq)
-                .append("nickname", nickname)
+                .append("name", name)
                 .append("email", email)
                 .append("password", "[PROTECTED]")
                 .append("login_count", login_count)
@@ -119,7 +125,7 @@ public class User {
 
     static public class Builder {
         private Long seq;
-        private String nickname;
+        private String name;
         private Email email;
         private String password;
         private int login_count;
@@ -130,7 +136,7 @@ public class User {
 
         public Builder(User user) {
             this.seq = user.seq;
-            this.nickname = user.nickname;
+            this.name = user.name;
             this.email = user.email;
             this.password = user.password;
             this.login_count = user.login_count;
@@ -143,8 +149,8 @@ public class User {
             return this;
         }
 
-        public Builder nickname(String nickname) {
-            this.nickname = nickname;
+        public Builder name(String name) {
+            this.name = name;
             return this;
         }
 
@@ -175,7 +181,7 @@ public class User {
         }
 
         public User build() {
-            return new User(seq, nickname, email, password, login_count, create_at, last_login_at);
+            return new User(seq, name, email, password, login_count, create_at, last_login_at);
         }
     }
 }
