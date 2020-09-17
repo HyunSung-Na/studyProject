@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class JoinRequest {
 
-  private String nickname;
+  private String name;
 
   private String principal;
 
@@ -13,12 +13,12 @@ public class JoinRequest {
 
   protected JoinRequest() {}
 
-  public String getNickname() {
-    return nickname;
+  public String getName() {
+    return name;
   }
 
-  public void setNickname(String nickname) {
-    this.nickname = nickname;
+  public void setName(String nickname) {
+    this.name = nickname;
   }
 
   public String getPrincipal() {
@@ -40,7 +40,7 @@ public class JoinRequest {
   @Override
   public String toString() {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-      .append("nickname", nickname)
+      .append("name", name)
       .append("principal", principal)
       .append("credentials", credentials)
       .toString();

@@ -2,7 +2,6 @@ package com.infinite.study.service;
 
 import com.infinite.study.error.NotFoundException;
 import com.infinite.study.model.Id;
-import com.infinite.study.model.user.ConnectedUser;
 import com.infinite.study.model.user.Email;
 import com.infinite.study.model.user.User;
 import com.infinite.study.repository.user.UserRepository;
@@ -10,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -68,20 +66,6 @@ public class UserService {
         checkNotNull(email, "email must be provided.");
 
         return userRepository.findByEmail(email);
-    }
-
-    @Transactional(readOnly = true)
-    public List<ConnectedUser> findAllConnectedUser(Id<User, Long> userId) {
-        checkNotNull(userId, "userId must be provided.");
-
-        return userRepository.findAllConnectedUser(userId);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Id<User, Long>> findConnectedIds(Id<User, Long> userId) {
-        checkNotNull(userId, "userId must be provided.");
-
-        return userRepository.findConnectedIds(userId);
     }
 
     private User insert(User user) {

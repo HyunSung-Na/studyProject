@@ -91,31 +91,6 @@ public class JdbcUserRepository implements UserRepository {
         return ofNullable(results.isEmpty() ? null : results.get(0));
     }
 
-    @Override
-    public List<ConnectedUser> findAllConnectedUser(Id<User, Long> userId) {
-        return jdbcTemplate.query(
-                "SELECT u.seq,u.,u.email,c.granted_at FROM connections c JOIN users u ON c.target_seq=u.seq WHERE c.user_seq=? AND c.granted_at is not null ORDER BY seq DESC",
-                new Object[]{userId.value()},
-                (rs, rowNum) -> new ConnectedUser(
-                        rs.getLong("seq"),
-                        rs.getString("name"),
-                        new Email(rs.getString("email")),
-                        rs.getNString("profileImageUrl"),
-                        dateTimeOf(rs.getTimestamp("granted_at"))
-                )
-        );
-    }
-
-    @Override
-    public List<Id<User, Long>> findConnectedIds(Id<User, Long> userId) {
-        return jdbcTemplate.query(
-                "SELECT target_seq FROM connections WHERE user_seq=? AND granted_at is not null ORDER BY target_seq",
-                new Object[]{userId.value()},
-                (rs, rowNum) -> Id.of(User.class, rs.getLong("target_seq"))
-        );
-    }
-
-
     static RowMapper<User> mapper = (rs, rowNum) -> new User.Builder()
             .seq(rs.getLong("seq"))
             .name(rs.getString("name"))

@@ -19,8 +19,4 @@ public interface UserRepository {
     Optional<User> findByEmail(Email email);
 
     Optional<User> findByName(Id<User, String> name);
-
-    List<ConnectedUser> findAllConnectedUser(Id<User, Long> userId);
-
-    List<Id<User, Long>> findConnectedIds(Id<User, Long> userId);
 }

@@ -13,6 +13,7 @@ import java.util.Optional;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.time.LocalDateTime.now;
+import static java.time.chrono.ChronoLocalDateTime.timeLineOrder;
 import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -35,18 +36,22 @@ public class Post {
 
   private final LocalDateTime createAt;
 
-  public Post(Id<User, Long> userId, Writer writer, String contents) {
-    this(null, userId, contents, 0, false, 0, writer, null);
+  private String title;
+
+  public Post(Id<User, Long> userId, Writer writer, String contents, String title) {
+    this(null, userId, contents, 0, false, 0, writer, null, title);
   }
 
-  public Post(Long seq, Id<User, Long> userId, String contents, int likes, boolean likesOfMe, int comments, Writer writer, LocalDateTime createAt) {
+  public Post(Long seq, Id<User, Long> userId, String contents, int likes, boolean likesOfMe, int comments, Writer writer, LocalDateTime createAt, String title) {
     checkNotNull(userId, "userId must be provided.");
     checkArgument(isNotEmpty(contents), "contents must be provided.");
     checkArgument(
       contents.length() >= 4 && contents.length() <= 500,
       "post contents length must be between 4 and 500 characters."
     );
-
+    checkArgument(isNotEmpty(title), "title must be provided");
+    checkArgument(title.length() >= 2 && title.length() <= 100,
+            "title length must be between 2 and 100 characters");
     this.seq = seq;
     this.userId = userId;
     this.contents = contents;
@@ -55,16 +60,21 @@ public class Post {
     this.comments = comments;
     this.writer = writer;
     this.createAt = defaultIfNull(createAt, now());
+    this.title = title;
   }
 
-  public void modify(String contents) {
+  public void modify(String contents, String title) {
     checkArgument(isNotEmpty(contents), "contents must be provided.");
     checkArgument(
       contents.length() >= 4 && contents.length() <= 500,
       "post contents length must be between 4 and 500 characters."
     );
+    checkArgument(isNotEmpty(title), "title must be provided");
+    checkArgument(title.length() >= 2 && title.length() <= 100,
+            "title length must be between 2 and 100 characters");
 
     this.contents = contents;
+    this.title = title;
   }
 
   public int incrementAndGetLikes() {
@@ -108,6 +118,10 @@ public class Post {
     return createAt;
   }
 
+  public String getTitle() {
+    return title;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -132,6 +146,7 @@ public class Post {
       .append("comments", comments)
       .append("writer", writer)
       .append("createAt", createAt)
+      .append("title", title)
       .toString();
   }
 
@@ -144,6 +159,7 @@ public class Post {
     private int comments;
     private Writer writer;
     private LocalDateTime createAt;
+    private String title;
 
     public Builder() {
     }
@@ -157,6 +173,7 @@ public class Post {
       this.comments = post.comments;
       this.writer = post.writer;
       this.createAt = post.createAt;
+      this.title = post.title;
     }
 
     public Builder seq(Long seq) {
@@ -199,8 +216,13 @@ public class Post {
       return this;
     }
 
+    public Builder title(String title) {
+      this.title = title;
+      return this;
+    }
+
     public Post build() {
-      return new Post(seq, userId, contents, likes, likesOfMe, comments, writer, createAt);
+      return new Post(seq, userId, contents, likes, likesOfMe, comments, writer, createAt, title);
     }
   }
 

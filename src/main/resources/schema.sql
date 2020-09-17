@@ -36,17 +36,6 @@ CREATE TABLE likes (
                                       create_at datetime default now() NOT null
 );
 
-CREATE TABLE connections (
-                             seq         bigint NOT NULL AUTO_INCREMENT,
-                             user_seq    bigint NOT NULL,
-                             target_seq  bigint NOT NULL,
-                             granted_at  datetime DEFAULT NULL,
-                             create_at   datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-                             PRIMARY KEY (seq),
-                             CONSTRAINT fk_connection_to_user FOREIGN KEY (user_seq) REFERENCES users (seq) ON DELETE RESTRICT ON UPDATE RESTRICT,
-                             CONSTRAINT fk_connection_to_user2 FOREIGN KEY (target_seq) REFERENCES users (seq) ON DELETE RESTRICT ON UPDATE RESTRICT
-);
-
 CREATE TABLE study (
                                       seq bigint auto_increment primary key,
                                       user_seq bigint NOT NULL,
