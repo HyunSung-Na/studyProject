@@ -48,7 +48,14 @@ public class JdbcStudyRepository implements StudyRepository{
 
     @Override
     public void update(Study study) {
-
+        jdbcTemplate.update(
+                "UPDATE study SET title=?,shortDescription=?,fullDescription=?,zones=? WHERE seq=?",
+                study.getTitle(),
+                study.getShortDescription(),
+                study.getFullDescription(),
+                study.getZones(),
+                study.getSeq()
+        );
     }
 
     @Override

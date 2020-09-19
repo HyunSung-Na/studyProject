@@ -32,6 +32,9 @@ public class Study {
 
     private final LocalDateTime publishDateTime;
 
+    public Study(Id<User, Long> user_seq, String title, String shortDescription, String fullDescription, String zones, Writer writer) {
+        this(null, user_seq, title, shortDescription, fullDescription, zones, writer, null);
+    }
 
     public Study(Long seq, Id<User, Long> user_seq, String title, String shortDescription, String fullDescription, String zones, Writer writer, LocalDateTime publishDateTime) {
         checkNotNull(user_seq, "userId must be provided.");
