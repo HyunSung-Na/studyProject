@@ -14,8 +14,8 @@ public interface StudyRepository {
 
     void update(Study study);
 
-    Optional<Study> findById(Id<Study, Long> studyId, Id<User, Long> writerId, Id<User, Long> userId);
+    Optional<Study> findById(Id<Study, Long> studyId, Id<User, Long> writerId);
 
-    List<Study> findAll(Id<User, Long> writerId, Id<User, Long> userId, long offset, int limit);
+    List<Study> findAll(Id<User, Long> writerId, long offset, int limit);
 
 }

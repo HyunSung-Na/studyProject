@@ -53,7 +53,7 @@ public class StudyComment {
     this.create_at = defaultIfNull(create_at, now());
   }
 
-  public void modify(String contents) {
+    public void modify(String contents) {
     checkArgument(isNotEmpty(contents), "contents must be provided.");
     checkArgument(
       contents.length() >= 4 && contents.length() <= 500,

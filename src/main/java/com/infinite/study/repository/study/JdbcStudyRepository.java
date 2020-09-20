@@ -1,7 +1,6 @@
 package com.infinite.study.repository.study;
 
 import com.infinite.study.model.Id;
-import com.infinite.study.model.posts.Post;
 import com.infinite.study.model.study.Study;
 import com.infinite.study.model.user.Email;
 import com.infinite.study.model.user.User;
@@ -18,11 +17,16 @@ import java.util.Optional;
 
 import static com.infinite.study.util.DateTimeUtils.dateTimeOf;
 import static com.infinite.study.util.DateTimeUtils.timestampOf;
+import static java.util.Optional.ofNullable;
 
 @Repository
 public class JdbcStudyRepository implements StudyRepository{
 
-    JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
+    public JdbcStudyRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
 
     @Override
@@ -59,13 +63,31 @@ public class JdbcStudyRepository implements StudyRepository{
     }
 
     @Override
-    public Optional<Study> findById(Id<Study, Long> studyId, Id<User, Long> writerId, Id<User, Long> userId) {
-        return Optional.empty();
+    public Optional<Study> findById(Id<Study, Long> studyId, Id<User, Long> writerId) {
+        List<Study> results = jdbcTemplate.query(
+                "SELECT " +
+                        "s.*, u.email, u.name " +
+                        "FROM study s JOIN users u ON s.user_seq=u.seq " +
+                        "WHERE s.seq=? AND s.user_seq=?", new Object[]{studyId.value(), writerId.value()}, mapper);
+        return ofNullable(results.isEmpty() ? null : results.get(0));
     }
 
     @Override
-    public List<Study> findAll(Id<User, Long> writerId, Id<User, Long> userId, long offset, int limit) {
-        return null;
+    public List<Study> findAll(Id<User, Long> writerId, long offset, int limit) {
+        return jdbcTemplate.query(
+                "SELECT " +
+                        "s.*,u.email,u.name " +
+                        "FROM " +
+                        "study s JOIN users u ON s.user_seq=u.seq " +
+                        "WHERE " +
+                        "s.user_seq=? " +
+                        "ORDER BY " +
+                        "s.seq DESC " +
+                        "LIMIT " +
+                        "?, ?",
+                new Object[]{writerId.value(), offset, limit},
+                mapper
+        );
     }
 
     static RowMapper<Study> mapper = (rs, rowNum) -> new Study.Builder()
