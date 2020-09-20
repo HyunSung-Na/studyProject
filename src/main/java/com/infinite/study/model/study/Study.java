@@ -57,14 +57,25 @@ public class Study {
 
     }
 
-    public void modify(String fullDescription) {
-        checkArgument(isNotEmpty(fullDescription), "contents must be provided.");
+    public void modify(String title, String fullDescription, String shortDescription, String zones) {
+        checkArgument(isNotEmpty(fullDescription), "fullDescription must be provided.");
         checkArgument(
                 fullDescription.length() >= 4 && fullDescription.length() <= 1000,
                 "study fullDescription length must be between 4 and 1000 characters."
         );
+        checkArgument(isNotEmpty(shortDescription), "shortDescription must be provided.");
+        checkArgument(
+                shortDescription.length() >= 2 && shortDescription.length() <= 100,
+                "study fullDescription length must be between 2 and 100 characters."
+        );
 
+        checkArgument(isNotEmpty(title), "title must be provided.");
+        checkArgument(isNotEmpty(zones), "zones must be provided.");
+
+        this.title = title;
         this.fullDescription = fullDescription;
+        this.shortDescription = shortDescription;
+        this.zones = zones;
     }
 
 

@@ -11,3 +11,11 @@ INSERT INTO post_comments(seq,user_seq,post_seq,contents,create_at) VALUES (null
 INSERT INTO post_comments(seq,user_seq,post_seq,contents,create_at) VALUES (null,2,4,'first comment','2019-03-01 13:15:00');
 
 INSERT INTO likes(seq,user_seq,post_seq,create_at) VALUES (null,1,1,'2019-03-01 15:10:00');
+
+INSERT INTO study(seq,user_seq,title,shortDescription,fullDescription,publishDateTime,zones) VALUES (null,1,'first study','test01 first post','first study seoul','2019-03-01 13:10:00','seoul');
+INSERT INTO study(seq,user_seq,title,shortDescription,fullDescription,publishDateTime,zones) VALUES (null,1,'second study','test01 second post','second study busan','2019-03-12 09:45:00','busan');
+INSERT INTO study(seq,user_seq,title,shortDescription,fullDescription,publishDateTime,zones) VALUES (null,1,'third study','test01 third post','third study buchen','2019-03-20 19:05:00','buchen');
+INSERT INTO study(seq,user_seq,title,shortDescription,fullDescription,publishDateTime,zones) VALUES (null,1,'first study','test02 post','my first study gangnam','2019-03-01 13:10:00','gangnam');
+
+INSERT INTO study_comment(seq,user_seq,study_seq,comments,create_at) VALUES (null,1,1,'first comment','2019-03-01 13:15:00');
+INSERT INTO study_comment(seq,user_seq,study_seq,comments,create_at) VALUES (null,2,4,'first comment','2019-03-01 13:15:00');
