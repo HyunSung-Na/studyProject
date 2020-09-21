@@ -7,10 +7,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.time.LocalDateTime.now;
+import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -103,8 +105,8 @@ public class Study {
         return zones;
     }
 
-    public Writer getWriter() {
-        return writer;
+    public Optional<Writer> getWriter() {
+        return ofNullable(writer);
     }
 
     public LocalDateTime getPublishDateTime() {

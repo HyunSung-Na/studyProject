@@ -79,8 +79,8 @@ public class StudyComment {
     return contents;
   }
 
-  public Writer getWriter() {
-    return writer;
+  public Optional<Writer> getWriter() {
+    return ofNullable(writer);
   }
 
   public LocalDateTime getCreate_at() {
