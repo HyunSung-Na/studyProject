@@ -8,6 +8,9 @@ import com.infinite.study.model.user.User;
 import com.infinite.study.security.Jwt;
 import com.infinite.study.security.JwtAuthentication;
 import com.infinite.study.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,7 @@ import static com.infinite.study.controller.ApiResult.OK;
 
 @RestController
 @RequestMapping("api")
+@Api(tags = "사용자 APIs")
 public class UserRestController {
 
     private final Jwt jwt;
@@ -29,7 +33,9 @@ public class UserRestController {
     }
 
     @PostMapping(path = "user/exists")
-    public ApiResult<Boolean> checkEmail(@RequestBody Map<String, String> request) {
+    @ApiOperation(value = "이메일 중복확인 (API 토큰 필요없음)")
+    public ApiResult<Boolean> checkEmail(
+            @RequestBody @ApiParam(value = "example: {\"address\": \"test00@gmail.com\"}") Map<String, String> request) {
         Email email = new Email(request.get("address"));
         return OK(
                 userService.findByEmail(email).isPresent()
@@ -38,6 +44,7 @@ public class UserRestController {
 
 
     @PostMapping(path = "user/join")
+    @ApiOperation(value = "회원가입 (API 토큰 필요없음)")
     public ApiResult<JoinResult> join(@ModelAttribute JoinRequest joinRequest) {
         User user = userService.join(
                 joinRequest.getName(),
@@ -52,6 +59,7 @@ public class UserRestController {
     }
 
     @GetMapping(path = "user/me")
+    @ApiOperation(value = "내 정보")
     public ApiResult<UserDto> me(@AuthenticationPrincipal JwtAuthentication authentication) {
         return OK(
                 userService.findById(authentication.id)
