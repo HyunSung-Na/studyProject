@@ -50,5 +50,4 @@ public class WebMvcConfigure implements WebMvcConfigurer {
         }
       });
   }
-
 }
