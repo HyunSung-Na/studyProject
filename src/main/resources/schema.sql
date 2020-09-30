@@ -3,7 +3,7 @@ CREATE SCHEMA IF NOT EXISTS STUDY_INFINITE;
 
 CREATE TABLE users (
                                       seq bigint PRIMARY KEY auto_increment,
-                                      name varchar(50) NOT NULL UNIQUE,
+                                      name varchar(50) NOT NULL,
                                       email varchar(50) NOT NULL UNIQUE,
                                       password varchar(255) NOT NULL,
                                       login_count int NOT NULL default 0,

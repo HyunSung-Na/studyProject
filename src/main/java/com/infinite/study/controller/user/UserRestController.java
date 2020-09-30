@@ -45,7 +45,7 @@ public class UserRestController {
 
     @PostMapping(path = "user/join")
     @ApiOperation(value = "회원가입 (API 토큰 필요없음)")
-    public ApiResult<JoinResult> join(@ModelAttribute JoinRequest joinRequest) {
+    public ApiResult<JoinResult> join(@RequestBody JoinRequest joinRequest) {
         User user = userService.join(
                 joinRequest.getName(),
                 new Email(joinRequest.getPrincipal()),
