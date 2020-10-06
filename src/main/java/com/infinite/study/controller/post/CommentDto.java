@@ -3,6 +3,7 @@ package com.infinite.study.controller.post;
 
 import com.infinite.study.model.posts.Comment;
 import com.infinite.study.util.Writer;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -12,12 +13,16 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 
 public class CommentDto {
 
+  @ApiModelProperty(value = "PK", required = true)
   private Long seq;
 
+  @ApiModelProperty(value = "내용", required = true)
   private String contents;
 
+  @ApiModelProperty(value = "작성자")
   private Writer writer;
 
+  @ApiModelProperty(value = "작성일시", required = true)
   private LocalDateTime createAt;
 
   public CommentDto(Comment source) {

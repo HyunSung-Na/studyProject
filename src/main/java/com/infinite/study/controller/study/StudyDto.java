@@ -2,6 +2,7 @@ package com.infinite.study.controller.study;
 
 import com.infinite.study.model.study.Study;
 import com.infinite.study.util.Writer;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.time.LocalDateTime;
@@ -10,18 +11,25 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 
 public class StudyDto {
 
+    @ApiModelProperty(value = "PK", required = true)
     private Long seq;
 
+    @ApiModelProperty(value = "제목", required = true)
     private String title;
 
+    @ApiModelProperty(value = "짧은 소개", required = true)
     private String shortDescription;
 
+    @ApiModelProperty(value = "내용", required = true)
     private String fullDescription;
 
+    @ApiModelProperty(value = "지역", required = true)
     private String zones;
 
+    @ApiModelProperty(value = "작성자")
     private Writer writer;
 
+    @ApiModelProperty(value = "생성일자", required = true)
     private LocalDateTime publishDateTime;
 
     public StudyDto(Study source) {

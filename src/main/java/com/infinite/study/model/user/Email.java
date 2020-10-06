@@ -1,6 +1,7 @@
 package com.infinite.study.model.user;
 
 
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -12,6 +13,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class Email {
 
+    @ApiModelProperty(value = "메일주소", required = true)
     private final String address;
 
     public Email(String address) {

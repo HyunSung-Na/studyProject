@@ -2,6 +2,7 @@ package com.infinite.study.controller.user;
 
 import com.infinite.study.model.user.Email;
 import com.infinite.study.model.user.User;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -11,16 +12,22 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 
 public class UserDto {
 
+  @ApiModelProperty(value = "PK", required = true)
   private Long seq;
 
-  private String nickname;
+  @ApiModelProperty(value = "사용자명", required = true)
+  private String name;
 
+  @ApiModelProperty(value = "이메일", required = true)
   private Email email;
 
+  @ApiModelProperty(value = "로그인 횟수", required = true)
   private int login_count;
 
+  @ApiModelProperty(value = "생성일시", required = true)
   private LocalDateTime create_at;
 
+  @ApiModelProperty(value = "최종로그인일시")
   private LocalDateTime last_login_at;
 
   public UserDto(User source) {
@@ -37,12 +44,12 @@ public class UserDto {
     this.seq = seq;
   }
 
-  public String getNickname() {
-    return nickname;
+  public String getName() {
+    return name;
   }
 
-  public void setNickname(String name) {
-    this.nickname = nickname;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public Email getEmail() {
@@ -81,7 +88,7 @@ public class UserDto {
   public String toString() {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
       .append("seq", seq)
-      .append("nickname", nickname)
+      .append("name", name)
       .append("email", email)
       .append("login_count", login_count)
       .append("create_at", create_at)

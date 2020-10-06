@@ -4,13 +4,16 @@ import com.infinite.study.model.Id;
 import com.infinite.study.model.posts.Post;
 import com.infinite.study.model.user.User;
 import com.infinite.study.util.Writer;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class PostingRequest {
 
+  @ApiModelProperty(value = "내용", required = true)
   private String contents;
 
+  @ApiModelProperty(value = "제목", required = true)
   private String title;
 
   protected PostingRequest() {}

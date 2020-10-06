@@ -5,11 +5,13 @@ import com.infinite.study.model.study.Study;
 import com.infinite.study.model.study.StudyComment;
 import com.infinite.study.model.user.User;
 import com.infinite.study.util.Writer;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class StudyCommentRequest {
 
+    @ApiModelProperty(value = "내용", required = true)
     private String comments;
 
     protected StudyCommentRequest() {}

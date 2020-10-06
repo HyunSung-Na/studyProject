@@ -2,6 +2,7 @@ package com.infinite.study.controller.study;
 
 import com.infinite.study.model.study.StudyComment;
 import com.infinite.study.util.Writer;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -11,12 +12,16 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 
 public class StudyCommentDto {
 
+    @ApiModelProperty(value = "PK", required = true)
     private Long seq;
 
+    @ApiModelProperty(value = "내용", required = true)
     private String comments;
 
+    @ApiModelProperty(value = "작성자")
     private Writer writer;
 
+    @ApiModelProperty(value = "작성일시", required = true)
     private LocalDateTime create_at;
 
     public StudyCommentDto(StudyComment source) {
